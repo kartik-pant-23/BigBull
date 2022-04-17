@@ -11,3 +11,90 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+/* Landing Page */
+.landingUpper {
+  background-image: linear-gradient(
+      112.87deg,
+      rgba(131, 0, 0, 0.75) 0%,
+      rgba(0, 0, 0, 0.75) 100%
+    ),
+    url('./images/background.png');
+  background-repeat: no-repeat;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  background-position: center;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  color: #fff;
+  padding-bottom: 8rem;
+}
+.navbar {
+  background-color: #4d2120;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+.navbar-brand {
+  padding-left: 2.8rem;
+  font-size: 1.5rem;
+  font-weight: 400;
+}
+.navbar a {
+  color: #fff;
+}
+.nav-item {
+  padding-right: 2rem;
+}
+.navbar-toggler {
+  color: #fff;
+}
+.landingUpper-stockinfo {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  margin: 5rem 14rem;
+  background-color: #181616;
+  color: #fff;
+  padding-top: 0.95rem;
+}
+
+.landingUpper-title {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-top: 5rem;
+}
+.left-title {
+  flex: 1;
+  padding-left: 3rem;
+  padding-right: 5rem;
+}
+.right-title {
+  flex: 1;
+  background: rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 0px 24px rgba(0, 0, 0, 0.25);
+  margin-right: 3rem;
+}
+.right-title-content {
+  padding: 2rem;
+}
+form {
+  width: 50%;
+  margin: 0 auto;
+  margin-top: 5rem;
+  border: 1px solid #fff;
+  box-shadow: 5px 5px 5px 5px #ea7b7b;
+}
+.form-outline {
+  width: 90%;
+  margin: 0 auto;
+}
+.register-button {
+  width: 90%;
+  margin: 0 auto;
+  margin-bottom: 2rem;
+}
+.first {
+  margin-top: 2rem;
+}

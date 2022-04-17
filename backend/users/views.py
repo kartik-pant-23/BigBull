@@ -18,7 +18,8 @@ def registerUser(request):
         first_name = data['first_name'],
         last_name = data['last_name'],
         email = data['email'],
-        password = hash_password
+        password = hash_password,
+        wishlist = []
     )
     serializer = UserSerializer(user, many=False)
     return Response(serializer.data)
