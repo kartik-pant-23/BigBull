@@ -18,8 +18,8 @@ INSTALLED_APPS = [
     'rest_framework', # django rest framework
     'rest_framework.authtoken', # for token generation
     'frontend', # responsible for rendering react frontend
-    'api', # returns back all the routes
     'users', # everything related to user - register/login/reset
+    'stocks',
 ]
 
 MIDDLEWARE = [

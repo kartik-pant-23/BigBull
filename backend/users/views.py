@@ -1,7 +1,11 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+
 from .models import User
 from .serializers import UserSerializer
+from stocks.models import Stock
+from stocks.serializers import StockSerializer
+from stocks.views import scrapeStockDetails
 from django.contrib.auth.hashers import make_password, check_password
 import jwt, datetime
 
@@ -14,15 +18,14 @@ def registerUser(request):
         }, status=403)
     data = request.data
     hash_password = make_password(data['password'])
-    user = User.objects.create(
+    User.objects.create(
         first_name = data['first_name'],
         last_name = data['last_name'],
         email = data['email'],
         password = hash_password,
         wishlist = []
     )
-    serializer = UserSerializer(user, many=False)
-    return Response(serializer.data)
+    return Response({ "message": "User created!" })
 
 @api_view(['POST'])
 def loginUser(request):
@@ -48,12 +51,13 @@ def getUserDetails(request, user_id):
     user = User.objects.filter(id=user_id).first()
     if user:
         user_data = UserSerializer(user).data
-        # get data of portfolio and wish-list
+        portfolio = Stock.objects.filter(user_id=user_id)
+        portfolio_data = StockSerializer(portfolio, many=True).data
         return Response({
             "message": "success",
             "user": user_data,
-            "portfolio": [],
-            "wishlist": user.wishlist
+            "portfolio": portfolio_data,
+            # "wishlist": map(lambda x: scrapeStockDetails(x), user.wishlist)
         })
     return Response({ "message": "User does not exist!" }, status=404)
 
