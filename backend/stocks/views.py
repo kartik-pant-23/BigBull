@@ -10,16 +10,27 @@ def scrapeStockDetails(symbol):
     URL = "https://www.google.com/finance/quote/{}:NSE".format(symbol)
     r = requests.get(URL)
     soup = BeautifulSoup(r.content, 'html5lib') 
-    price = soup.find('div',{'class':'YMlKec fxKbKc'}).text 
-    return {
-        "symbol": symbol,
-        "price": price[3:]
-    }
+    
+    details = {}
+    details["Company Name"] = soup.find('div',{'class':'zzDege'}).text
+    details["Current Price"] = soup.find('div',{'class':'YMlKec fxKbKc'}).text.replace("â‚¹", u'\u20B9')
+    
+    key_val=soup.find_all('div',{'class':'mfs7Fc'})
+    val = soup.find_all('div',{'class':'P6K39c'})
+
+    for i in range(len(key_val)):
+        this_val = val[i].text
+        this_val = this_val.replace("â‚¹", u'\u20B9')
+        details[key_val[i].text] = this_val
+
+    return details
 
 @api_view(['GET'])
 def getStockDetails(request, symbol):
-    # this should be able to return OHLC data for the stock
-    # so that the graph can be prepared
+    return Response(scrapeStockDetails(symbol))
+
+@api_view(['GET'])
+def getStockOHLCDetails(request, symbol):
     return Response(scrapeStockDetails(symbol))
 
 @api_view(['POST'])
