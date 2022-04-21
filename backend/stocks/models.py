@@ -11,3 +11,10 @@ class Stock(models.Model):
 
     class Meta:
         ordering = ['-id']
+
+class Company(models.Model):
+    symbol = models.CharField(max_length=128, null=False)
+    company_name = models.CharField(max_length=128, null=False)
+
+    class Meta:
+        ordering = ['id']

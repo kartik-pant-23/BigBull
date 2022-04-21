@@ -1,10 +1,14 @@
-from .serializers import StockSerializer
+from .serializers import StockSerializer, CompanySerializer
 from users.models import User
-from .models import Stock
+from .models import Stock, Company
 import requests
+import pandas as pd
+import yfinance as yf
 from bs4 import BeautifulSoup
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from django.db.models import Q
+import datetime
 
 def scrapeStockDetails(symbol):
     URL = "https://www.google.com/finance/quote/{}:NSE".format(symbol)
@@ -24,14 +28,33 @@ def scrapeStockDetails(symbol):
         details[key_val[i].text] = this_val
 
     return details
-
 @api_view(['GET'])
 def getStockDetails(request, symbol):
     return Response(scrapeStockDetails(symbol))
 
+def scrapeOHLCData(symbol):
+    df = yf.download("{}.NS".format(symbol), 
+        period="1d",
+        interval="1m",
+        progress=False,
+    )
+    df=df.drop(['Adj Close','Volume'],axis=1)
+    df = df.to_dict('index')
+    data = {}
+    for key in df.keys():
+        data[key.timestamp() * 1000] = df[key]
+    return data
 @api_view(['GET'])
 def getStockOHLCDetails(request, symbol):
-    return Response(scrapeStockDetails(symbol))
+    return Response(scrapeOHLCData(symbol))
+
+@api_view(['GET'])
+def searchStock(request):
+    symbol = request.GET.get('q', '')
+    companies = Company.objects.filter(Q(symbol__contains=symbol) | Q(company_name__contains=symbol))[:10]
+    return Response({
+        "companies": CompanySerializer(companies, many=True).data
+    })
 
 @api_view(['POST'])
 def buyStocks(request):

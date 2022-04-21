@@ -8,3 +8,8 @@ class StockSerializer(ModelSerializer):
         extra_kwargs = {
             'user_id': {'write_only': True}
         }
+
+class CompanySerializer(ModelSerializer):
+    class Meta:
+        model = Stock
+        fields = ['symbol', 'company_name']
