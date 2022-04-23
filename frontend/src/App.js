@@ -9,6 +9,9 @@ import LandingPage from './routes/LandingPage/LandingPage'
 import Register from './routes/LandingPage/register'
 import Login from './routes/LandingPage/login'
 import Dashboard from './routes/Dashboard/Dashboard'
+import WatchList from './components/DashCompnenets/WatchList'
+import Portfolio from './routes/Dashboard/Portfolio'
+import Stock from './routes/Dashboard/Stock'
 
 function App() {
   return (
@@ -27,6 +30,7 @@ function App() {
             />
             <Route exact path='/login' element={<Login />} />
             <Route exact path='/register' element={<Register />} />
+            <Route exact path='/dashboard/stock/:symbol' element={<Stock />} />
           </Routes>
         </AuthProvider>
       </Router>

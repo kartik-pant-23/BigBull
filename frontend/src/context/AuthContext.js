@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect } from 'react'
+import React, { createContext, useState, useEffect, useCallback } from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import jwt_decode from 'jwt-decode'
@@ -18,11 +18,10 @@ export const AuthProvider = ({ children }) => {
       ? jwt_decode(localStorage.getItem('authTokens'))
       : null
   )
-  let [userDetail, setUserDetail] = useState(() =>
-    localStorage.getItem('userDetail')
-      ? JSON.parse(localStorage.getItem('userDetail'))
-      : null
-  )
+
+  let [userDetail, setUserDetail] = useState(null)
+  let [portfolio, setPortfolio] = useState(null)
+
   const navigate = useNavigate()
 
   let registerUser = async (e) => {
@@ -63,31 +62,47 @@ export const AuthProvider = ({ children }) => {
     if (response.status === 200) {
       setAuthTokens(data)
       setUser(jwt_decode(data.token))
-
-      axios
-        .get(`http://127.0.0.1:3001/api/users/user/${user.id}/`)
-        .then((res) => {
-          console.log(res.data)
-          setUserDetail(res.data)
-          localStorage.setItem('userDetail', JSON.stringify(res.data))
-        })
-        .catch((error) => {
-          console.log(error)
-        })
-
       localStorage.setItem('authTokens', JSON.stringify(data))
       navigate('/dashboard')
     } else {
-      navigate('/register')
-      alert('register first')
+      alert('something went wrong')
     }
   }
+
+  let getUserDetail = async () => {
+    if (user) {
+      let response = await fetch(
+        `http://127.0.0.1:3001/api/users/user/${user.id}/`,
+        {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
+      let data = await response.json()
+      if (response.status === 200) {
+        setUserDetail(data)
+        setPortfolio(data.portfolio)
+      } else {
+        alert('Something went wrong!!')
+      }
+    }
+  }
+
+  useEffect(
+    () => {
+      getUserDetail()
+    },
+    user ? [user.id] : [-1]
+  )
 
   let contextData = {
     user: user,
     registerUser: registerUser,
     loginUser: loginUser,
     userDetail: userDetail,
+    portfolio: portfolio,
   }
 
   return (

@@ -1,10 +1,27 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import AuthContext from '../../context/AuthContext'
 import ApexChart from './graph'
+import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
 
 const DashNavbar = () => {
+  const navigate = useNavigate()
   let { user, userDetail } = useContext(AuthContext)
   // return <div>hello {userDetail && <p>{userDetail.user.first_name}</p>}</div>
+
+  const resetBalance = async () => {
+    let response = await fetch(
+      `http://127.0.0.1:3001/api/users/reset_balance/${user.id}/`,
+      {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    )
+    let data = await response.json()
+    window.location.reload()
+  }
   return (
     <>
       <nav class='navbar navbar-expand-lg navbar-dark'>
@@ -25,16 +42,11 @@ const DashNavbar = () => {
 
         <div class='collapse navbar-collapse' id='navbarSupportedContent'>
           <ul class='navbar-nav ml-auto'>
-            <li class='nav-item active'>
-              <a class='nav-link' href='#'>
-                Home <span class='sr-only'>(current)</span>
-              </a>
-            </li>
             <li class='nav-item'>
-              <a class='nav-link'>WishList</a>
-            </li>
-            <li class='nav-item'>
-              <a class='nav-link'>Portfolio</a>
+              <button className='btn btn-block'>
+                Available Balance:
+                {userDetail && userDetail.user.account_balance}
+              </button>
             </li>
             <li class='nav-item'>
               <a class='nav-link'>Basket</a>
@@ -42,7 +54,6 @@ const DashNavbar = () => {
             <li class='nav-item dropdown'>
               <a
                 class='nav-link dropdown-toggle'
-                href='#'
                 id='navbarDropdown'
                 role='button'
                 data-toggle='dropdown'
@@ -52,14 +63,15 @@ const DashNavbar = () => {
                 hello {userDetail && userDetail.user.first_name}
               </a>
               <div class='dropdown-menu' aria-labelledby='navbarDropdown'>
-                <a class='dropdown-item'>Balance Reset</a>
+                <a class='dropdown-item' onClick={resetBalance}>
+                  Balance Reset
+                </a>
                 <a class='dropdown-item'>Logout</a>
               </div>
             </li>
           </ul>
         </div>
       </nav>
-      <ApexChart />
     </>
   )
 }
