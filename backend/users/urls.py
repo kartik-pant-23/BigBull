@@ -5,6 +5,7 @@ urlpatterns = [
     path('register/', views.registerUser),
     path('login/', views.loginUser),
     path('user/<int:user_id>/', views.getUserDetails),
-    path('add_to_wishlist/', views.addToWishlist),
+    path('watchlist/add/', views.addToWatchlist),
+    path('watchlist/<int:user_id>/', views.getWatchlist),
     path('reset_balance/<int:user_id>/', views.resetBalance)
 ]

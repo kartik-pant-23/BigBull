@@ -62,7 +62,7 @@ def getUserDetails(request, user_id):
     return Response({ "message": "User does not exist!" }, status=404)
 
 @api_view(['PATCH'])
-def addToWishlist(request):
+def addToWatchlist(request):
     data = request.data
     user = User.objects.filter(id=data['user_id']).first()
     if (user):
@@ -70,12 +70,28 @@ def addToWishlist(request):
             user.wishlist.append(data['stock'])
         user.save()
         user_data = UserSerializer(user).data
-        user_data['wishlist'] = user.wishlist
+        user_data['watchlist'] = user.wishlist
         return Response({
             "message": "user update successful!", 
             "user": user_data
         })
     return Response({ "message": "User does not exist!" }, status=404)
+
+@api_view(['GET'])
+def getWatchlist(request, user_id):
+    data = request.data
+    user = User.objects.filter(id=user_id).first()
+    if (user):
+        watchlist_data = []
+        for symbol in user.wishlist:
+            data = scrapeStockDetails(symbol)
+            watchlist_data.append({
+                "symbol": symbol,
+                "company": data["Company Name"],
+                "current_price": data["Current Price"]
+            })
+        return Response(watchlist_data)
+    return Response({ "message": "User does not exist!" })
 
 @api_view(['PATCH'])
 def resetBalance(request, user_id):
