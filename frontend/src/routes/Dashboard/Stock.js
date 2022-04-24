@@ -141,6 +141,30 @@ const Stock = () => {
     }
   }
 
+  const addWatchlist = async () => {
+    try {
+      let response = await fetch(
+        'http://127.0.0.1:3001/api/users/watchlist/add/',
+        {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            user_id: user.id,
+            stock: symbol,
+          }),
+        }
+      )
+      if (response.status === 200) {
+        alert('Added to Watchlist')
+        navigate('/dashboard')
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   return (
     <div>
       <DashNavbar />
@@ -152,19 +176,42 @@ const Stock = () => {
             <div className='stock-detail-1'>
               {selectedStock && (
                 <div>
-                  <h3>{selectedStock['Company Name']}</h3>
-                  <h1>{selectedStock['Current Price']}</h1>
+                  <div className='stock-title-up'>
+                    <h3>{selectedStock['Company Name']}</h3>
+                    <button
+                      onClick={addWatchlist}
+                      className='btn btn-outline-secondary'
+                    >
+                      Add To Watchlist
+                    </button>
+                  </div>
+                  <div className='stock-title'>
+                    <div>
+                      <h1>{selectedStock['Current Price']}</h1>
+                    </div>
+                    <div className='stock-title-2'>
+                      <button
+                        type='button'
+                        data-toggle='modal'
+                        data-target='#exampleModal'
+                        className='btn btn-success'
+                      >
+                        Buy Stocks
+                      </button>
+                      <button
+                        type='button'
+                        className='btn btn-danger sell-button'
+                        data-toggle='modal'
+                        data-target='#exampleModalCenter'
+                      >
+                        Sell Stocks
+                      </button>
+                    </div>
+                  </div>
                 </div>
               )}
               <ApexChart data={ohlc} />
-              <button
-                type='button'
-                data-toggle='modal'
-                data-target='#exampleModal'
-                className='btn btn-lg btn-danger'
-              >
-                Buy Stocks
-              </button>
+
               <div
                 class='modal fade'
                 id='exampleModal'
@@ -209,14 +256,6 @@ const Stock = () => {
                   </div>
                 </div>
               </div>
-              <button
-                type='button'
-                class='btn btn-lg btn-success'
-                data-toggle='modal'
-                data-target='#exampleModalCenter'
-              >
-                Sell Stocks
-              </button>
               <div
                 class='modal fade'
                 id='exampleModalCenter'
@@ -268,9 +307,14 @@ const Stock = () => {
                   .slice(2)
                   .map((key) => {
                     return (
-                      <p key={key}>
-                        {key} - {selectedStock[key]}
-                      </p>
+                      <div className='list-group'>
+                        <a
+                          key={key}
+                          className='list-group-item list-group-item-action list-group-item-light'
+                        >
+                          <b>{key}</b> - {selectedStock[key]}
+                        </a>
+                      </div>
                     )
                   })}
             </div>

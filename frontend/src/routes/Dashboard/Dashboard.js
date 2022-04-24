@@ -8,16 +8,16 @@ import WatchList from '../../components/DashCompnenets/WatchList'
 
 const Dashboard = () => {
   return (
-    <section>
+    <section className='dashboard'>
       <DashNavbar />
       <div className='dashborad-components'>
-        <div>
+        <div className='watchlist'>
           <WatchList />
         </div>
-        <div>
+        <div className='portfolio'>
           <Portfolio />
         </div>
-        <div>
+        <div className='news'>
           <News />
         </div>
       </div>

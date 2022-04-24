@@ -34,8 +34,8 @@ def getStockDetails(request, symbol):
 
 def scrapeOHLCData(symbol):
     df = yf.download("{}.NS".format(symbol), 
-        period="1d",
-        interval="1m",
+        period="1y",
+        interval="1h",
         progress=False,
     )
     df=df.drop(['Adj Close','Volume'],axis=1)

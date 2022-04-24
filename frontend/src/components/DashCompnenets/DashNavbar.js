@@ -25,7 +25,11 @@ const DashNavbar = () => {
   return (
     <>
       <nav class='navbar navbar-expand-lg navbar-dark'>
-        <a class='navbar-brand' style={{ color: '#fff' }}>
+        <a
+          onClick={() => navigate('/dashboard')}
+          class='navbar-brand'
+          style={{ color: '#fff' }}
+        >
           BigBull
         </a>
         <button
