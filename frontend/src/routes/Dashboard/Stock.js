@@ -132,7 +132,15 @@ const Stock = () => {
       })
       let data = await response.json()
       if (response.status === 200) {
-        alert(data.message)
+        if (data.profit_earned >= 0) {
+          alert(
+            data.message + '. Profit Earned is ' + data.profit_earned.toFixed(0)
+          )
+        } else {
+          alert(
+            data.message + '. Loss Amount is ' + data.profit_earned.toFixed(0)
+          )
+        }
         navigate('/dashboard')
         window.location.reload()
       }
@@ -224,7 +232,7 @@ const Stock = () => {
                   <div class='modal-content'>
                     <div class='modal-header'>
                       <h5 class='modal-title' id='exampleModalLabel'>
-                        Modal title
+                        Buy Stocks
                       </h5>
                       <button
                         type='button'
@@ -246,7 +254,7 @@ const Stock = () => {
                     <div class='modal-footer'>
                       <button
                         type='button'
-                        class='btn btn-danger'
+                        class='btn btn-success'
                         data-dismiss='modal'
                         onClick={buyStocks}
                       >
@@ -268,7 +276,7 @@ const Stock = () => {
                   <div class='modal-content'>
                     <div class='modal-header'>
                       <h5 class='modal-title' id='exampleModalLongTitle'>
-                        Modal title
+                        Sell Stock
                       </h5>
                       <button
                         type='button'
@@ -290,7 +298,7 @@ const Stock = () => {
                     <div class='modal-footer'>
                       <button
                         type='button'
-                        class='btn btn-success'
+                        class='btn btn-danger'
                         data-dismiss='modal'
                         onClick={sellStocks}
                       >

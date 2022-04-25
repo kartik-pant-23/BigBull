@@ -52,9 +52,6 @@ const DashNavbar = () => {
                 {userDetail && userDetail.user.account_balance}
               </button>
             </li>
-            <li class='nav-item'>
-              <a class='nav-link'>Basket</a>
-            </li>
             <li class='nav-item dropdown'>
               <a
                 class='nav-link dropdown-toggle'
@@ -70,7 +67,6 @@ const DashNavbar = () => {
                 <a class='dropdown-item' onClick={resetBalance}>
                   Balance Reset
                 </a>
-                <a class='dropdown-item'>Logout</a>
               </div>
             </li>
           </ul>

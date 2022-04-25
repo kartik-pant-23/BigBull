@@ -68,6 +68,7 @@ a:hover {
   flex-direction: row;
   justify-content: center;
   margin-top: 5rem;
+  max-width: 50%;
 }
 .left-title {
   flex: 1;
@@ -82,6 +83,34 @@ a:hover {
 }
 .right-title-content {
   padding: 2rem;
+}
+.landing-middle {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  margin: 6rem 2rem;
+}
+i {
+  color: #92100e;
+}
+.landing-middle-comp {
+  margin: 2rem;
+  width: 100%;
+  text-align: center;
+}
+.about {
+  background-image: linear-gradient(
+    112.87deg,
+    rgba(131, 0, 0, 0.75) 0%,
+    rgba(0, 0, 0, 0.75) 100%
+  );
+  color: #fff;
+}
+.about-content {
+  padding: 7rem 10rem;
+}
+.about-content h2 {
+  font-size: 2.7rem;
 }
 form {
   width: 50%;
@@ -230,7 +259,7 @@ div::-webkit-scrollbar-thumb {
   margin-top: 2rem;
   margin-left: -1.5rem;
 }
-.dropdown-menu {
+.drop {
   width: 88%;
   height: 15rem;
   overflow: hidden;

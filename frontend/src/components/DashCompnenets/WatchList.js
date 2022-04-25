@@ -10,7 +10,7 @@ import icon from '../../images/favicon.ico'
 function SuggestionList({ data }) {
   const navigate = useNavigate()
   return (
-    <ul className='dropdown-menu'>
+    <ul className='dropdown-menu drop'>
       {data &&
         data.map((company) => (
           <li
