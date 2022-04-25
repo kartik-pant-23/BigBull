@@ -214,6 +214,13 @@ const Stock = () => {
                       >
                         Sell Stocks
                       </button>
+                      <button 
+                        className='btn btn-info'
+                        style={{ "marginLeft": "18px" }}
+                        onClick={ () => {
+                          window.open(`/dashboard/predict/${symbol}`, "_blank", "noopener noreferrer")
+                          // navigate(`/dashboard/predict/${symbol}`)
+                         }}>Predict Stock Price</button>
                     </div>
                   </div>
                 </div>

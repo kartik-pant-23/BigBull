@@ -19,7 +19,7 @@ const Portfolio = () => {
                   symbol={stock.symbol}
                   company_name={stock.company_name}
                   quantity={stock.quantity}
-                  avg_value={stock.avg_value}
+                  avg_value={stock.avg_value.toFixed(2)}
                 />
               )
             })}

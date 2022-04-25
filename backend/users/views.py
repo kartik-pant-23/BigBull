@@ -57,7 +57,6 @@ def getUserDetails(request, user_id):
             "message": "success",
             "user": user_data,
             "portfolio": portfolio_data,
-            # "wishlist": map(lambda x: scrapeStockDetails(x), user.wishlist)
         })
     return Response({ "message": "User does not exist!" }, status=404)
 
@@ -97,7 +96,7 @@ def getWatchlist(request, user_id):
 def resetBalance(request, user_id):
     user = User.objects.filter(id=user_id).first()
     if (user):
-        user.account_balance = 1000000
+        user.account_balance = 100000
         user.save()
         return Response({
             "message": "user update successful!", 

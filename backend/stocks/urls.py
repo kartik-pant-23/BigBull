@@ -7,4 +7,5 @@ urlpatterns = [
     path('sell/', views.sellStocks),
     path('details/<str:symbol>/', views.getStockDetails),
     path('ohlc/<str:symbol>/', views.getStockOHLCDetails),
+    path('predict/<str:symbol>/', views.getStockPrediction),
 ]

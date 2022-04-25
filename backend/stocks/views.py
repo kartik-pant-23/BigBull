@@ -8,6 +8,7 @@ from bs4 import BeautifulSoup
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from django.db.models import Q
+from .predictor import predict
 import datetime
 
 def scrapeStockDetails(symbol):
@@ -128,3 +129,14 @@ def sellStocks(request):
                 })
         return Response({ "message": "Don't have enough stocks of the company!" }, status=403)
     return Response({ "message": "User does not exist!" }, status=404)
+
+@api_view(['GET'])
+def getStockPrediction(request, symbol):
+    [predicted_price, real_price, dates] = predict(symbol)
+    predicted_price = predicted_price.tolist()
+    real_price = real_price.tolist()
+    return Response({
+        "predicted_price": predicted_price,
+        "real_price": real_price,
+        "dates": dates
+    })
