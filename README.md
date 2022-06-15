@@ -15,7 +15,7 @@ For predicting the stock price, `LSTM(Long-Short Term Memory)` model is used tha
 1. **Trading** - The application provides virtual currency inside the app, which a user can use to buy the stocks at their current market price. 
 Users start with an initial amount `100000` which can be refilled any time. Bought stocks are added to user's `portfolio`.
 To study the market better, it provides graphical representation of yearly stock price data. User's can play around with candle-stick graph to get 
-more information from it. And can even download the data as `CSV`.
+more information from it. And can even download the data as `SVG, CSV, PNG`.
 2. **Wishlist** - User can watch the details of the stock and then can add it to his wishlist, which allows faster accessibility.
 3. **Price Prediction** - This is where the real action takes place, stock-price prediction. User gets a detailed graph which shows the actual price and predicted prices, 
 that let's user understand, the predicted behaviour of particlar stock.
